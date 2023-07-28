@@ -4,17 +4,10 @@
 <div class="row justify-content-center">
     <div class="col-md-8 py-4">
         <div class="card">
+            <a href="/"><div class="card-header">{{ __('Home') }}</div></a>
             <div class="card-body">
 
-                @foreach($Cars as $Car)
-                        <p>
-                            {{ $Car->car->name }}
-                            @if(($Car->using) > 0)
-                            - currently using
-                            @endif
-                        </p>
-                @endforeach
-
+                <h3>Shopping List</h3>
                 <table class="table">
                     <thead>
                         <tr>
@@ -24,7 +17,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($Orders as $Order)
+                        @forelse($Orders as $Order)
                             <tr>
                                 <td>
                                     {{ $Order->product->name }}
@@ -36,9 +29,33 @@
                                     {{ $Order->quantity }}
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    Shopping list is empty
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
+
+
+                <h3>Car list</h3>
+                <ul class="list-group">
+                    @forelse($Cars as $Car)
+                        <li class="list-group-item" >
+                                {{ $Car->car->name }}
+                                @if(($Car->using) > 0)
+                                    - currently using
+                                @endif
+                        </li>
+                    @empty
+                        <li class="list-group-item">
+                            No cars assigned
+                        </li>
+                    @endforelse
+                </ul>
+
             </div>
         </div>
     </div>
